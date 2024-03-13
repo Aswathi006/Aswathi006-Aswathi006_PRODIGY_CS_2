@@ -1,0 +1,48 @@
+from PIL import Image
+
+def encrypt_image(image_path):
+    # Open the image
+    img = Image.open(image_path)
+    width, height = img.size
+
+    # Encrypt the image by swapping pixel values
+    for y in range(height):
+        for x in range(width):
+            r, g, b = img.getpixel((x, y))
+            # Example encryption: swapping red and blue channels
+            img.putpixel((x, y), (b, g, r))
+
+    # Save the encrypted image
+    encrypted_image_path = "encrypted_" + image_path
+    img.save(encrypted_image_path)
+    print("Image encrypted successfully:", encrypted_image_path)
+
+def decrypt_image(image_path):
+    # Open the encrypted image
+    img = Image.open(image_path)
+    width, height = img.size
+
+    # Decrypt the image by swapping pixel values back
+    for y in range(height):
+        for x in range(width):
+            r, g, b = img.getpixel((x, y))
+            # Example decryption: swapping back red and blue channels
+            img.putpixel((x, y), (b, g, r))
+
+    # Save the decrypted image
+    decrypted_image_path = "decrypted_" + image_path
+    img.save(decrypted_image_path)
+    print("Image decrypted successfully:", decrypted_image_path)
+
+def main():
+    image_path = input("Enter the path of the image file: ")
+    choice = input("Do you want to encrypt or decrypt the image? (e/d): ").lower()
+    if choice == 'e':
+        encrypt_image(image_path)
+    elif choice == 'd':
+        decrypt_image(image_path)
+    else:
+        print("Invalid choice")
+
+if __name__ == "__main__":
+    main()
